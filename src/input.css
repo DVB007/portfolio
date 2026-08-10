@@ -1,0 +1,337 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Koh Santepheap";
+  src: url("./fonts/KohSantepheap-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Playfair";
+  src: url("./fonts/Playfair-Italic-VariableFont_opsz,wdth,wght.ttf")
+    format("truetype");
+  font-weight: 300 900;
+  font-style: italic;
+}
+
+.font-kh {
+  font-family: "Koh Santepheap", serif;
+}
+
+.font-playfair {
+  font-family: "Playfair", serif;
+  font-style: italic;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary-100:#2C4A6E;
+  --color-secondary-100:#B8823A;
+  --color-accent-100:#3B6E64;
+  --color-black-text:#20232A;
+  --color-gray-text:#6E7280;
+  --color-white-text:#ffffff;
+  --color-background-light:#ffffff;
+  --color-background-black:#07122C;
+}
+
+/* Add this to input.css (inside the Tailwind file, e.g. after @tailwind directives) */
+
+.nav-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  color: #2C4A6E;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.nav-icon:hover {
+  color: #111827;
+  background-color: #7d94c3;
+}
+
+.dark .nav-icon {
+  color: #2C4A6E;
+}
+
+.dark .nav-icon:hover {
+  color: #f9fafb;
+  background-color: #2C4A6E;
+}
+
+.iconSVG {
+  width: 20px;
+  height: 20px;
+}
+
+/* Tooltip bubble — pulls text from the `tooltip="..."` attribute */
+.nav-icon::after {
+  content: attr(tooltip);
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background-color: #111827;
+  color: #ffffff;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+  z-index: 50;
+}
+
+/* Small arrow under the tooltip bubble */
+.nav-icon::before {
+  content: "";
+  position: absolute;
+  bottom: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  border: 5px solid transparent;
+  border-top-color: #111827;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+  z-index: 50;
+}
+
+.nav-icon:hover::after,
+.nav-icon:hover::before {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* On desktop the nav sits at the top, so flip the tooltip to appear BELOW the icon instead */
+@media (min-width: 768px) {
+  .nav-icon::after {
+    bottom: auto;
+    top: calc(100% + 10px);
+    transform: translateX(-50%) translateY(-4px);
+  }
+  .nav-icon::before {
+    bottom: auto;
+    top: calc(100% + 5px);
+    border-top-color: transparent;
+    border-bottom-color: #111827;
+    transform: translateX(-50%) translateY(-4px);
+  }
+  .nav-icon:hover::after,
+  .nav-icon:hover::before {
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Add to input.css */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* On mobile the nav floats at the bottom, so no offset needed there.
+   On desktop the nav sits fixed at the top, so add top padding to each
+   section target to prevent the nav from covering the section heading. */
+@media (min-width: 768px) {
+  section[id] {
+    scroll-margin-top: 90px;
+  }
+}
+
+/* Add to input.css, alongside the .nav-icon rules */
+
+.nav-divider {
+  width: 2px;
+  align-self: stretch;
+  margin: 4px 4px;
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+/* theme icon emoji sizing to match the SVG icons */
+#theme-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+
+/* ===== Education section ===== */
+
+.edu-section {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 56px 20px;
+  font-family: 'Work Sans', 'Public Sans', sans-serif;
+}
+
+.section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #3B6E64;
+  margin-bottom: 24px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #DCD9D0;
+}
+
+.dark .section-label {
+  color: #6FBFAE;
+  border-bottom-color: #3A4048;
+}
+
+.edu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* dotted leader row: label ····· value */
+.edu-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 14px;
+  color: #20232A;
+}
+
+.dark .edu-row {
+  color: #E9E6DC;
+}
+
+.edu-org {
+  flex-shrink: 0;
+  font-weight: 600;
+}
+
+.edu-leader {
+  flex: 1;
+  border-bottom: 1px dotted #DCD9D0;
+  margin-bottom: 4px;
+}
+
+.dark .edu-leader {
+  border-bottom-color: #3A4048;
+}
+
+.edu-detail {
+  flex-shrink: 0;
+  color: #6E7280;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dark .edu-detail {
+  color: #9AA3B0;
+}
+
+.edu-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #3B6E64;
+  color: #fff;
+  font-size: 10px;
+  line-height: 1;
+}
+
+/* ===== Certificate badge ===== */
+
+.cert-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+  padding: 14px 16px;
+  border: 1px solid #DCD9D0;
+  border-radius: 10px;
+  background-color: #FBFAF7;
+  text-decoration: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
+}
+
+.cert-badge:hover {
+  border-color: #3B6E64;
+  background-color: #F1F5F3;
+  transform: translateY(-1px);
+}
+
+.dark .cert-badge {
+  background-color: #1B2431;
+  border-color: #2A3543;
+}
+
+.dark .cert-badge:hover {
+  border-color: #6FBFAE;
+  background-color: #202B3A;
+}
+
+.cert-no {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: #3B6E64;
+  background-color: #E7EFEC;
+  padding: 3px 7px;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+.dark .cert-no {
+  color: #6FBFAE;
+  background-color: #23342F;
+}
+
+.cert-title {
+  flex: 1;
+  font-size: 13.5px;
+  color: #20232A;
+  min-width: 0;
+}
+
+.dark .cert-title {
+  color: #E9E6DC;
+}
+
+.cert-link {
+  flex-shrink: 0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: #6E7280;
+  white-space: nowrap;
+}
+
+.dark .cert-link {
+  color: #9AA3B0;
+}
+
+/* stack on small screens */
+@media (max-width: 480px) {
+  .edu-row {
+    flex-wrap: wrap;
+  }
+  .edu-leader {
+    display: none;
+  }
+  .cert-badge {
+    flex-wrap: wrap;
+  }
+  .cert-title {
+    flex-basis: 100%;
+    order: 2;
+  }
+}
